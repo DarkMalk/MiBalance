@@ -1,4 +1,4 @@
-import { RegisterAndLoginUserScheme } from './schemes/RegisterAndLoginUserScheme.js'
+import { UserScheme } from './schemes/UserScheme.js'
 import { TransactionScheme } from './schemes/TransactionScheme.js'
 import { CategoryScheme } from './schemes/CategoryScheme.js'
 
@@ -16,7 +16,7 @@ export enum HttpCodes {
   INTERNAL_SERVER_ERROR = 500
 }
 
-export type CreateAndLoginUserDTO = z.infer<typeof RegisterAndLoginUserScheme>
+export type CreateAndLoginUserDTO = z.infer<typeof UserScheme>
 
 export type CategoryDTO = z.infer<typeof CategoryScheme>
 

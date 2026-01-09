@@ -1,4 +1,4 @@
-import { RegisterAndLoginUserScheme } from '../schemes/RegisterAndLoginUserScheme.js'
+import { UserScheme } from '../schemes/UserScheme.js'
 import { Router } from 'express'
 
 import { validateRequest } from '../middlewares/validateRequest.js'
@@ -11,17 +11,9 @@ import { loginController } from '../controllers/users/login.js'
 
 const userRouter: Router = Router()
 
-userRouter.post(
-  '/register',
-  validateRequest(RegisterAndLoginUserScheme),
-  registerController
-)
+userRouter.post('/register', validateRequest(UserScheme), registerController)
 
-userRouter.post(
-  '/login',
-  validateRequest(RegisterAndLoginUserScheme),
-  loginController
-)
+userRouter.post('/login', validateRequest(UserScheme), loginController)
 
 userRouter.post('/logout', authMiddleware, logoutController)
 
