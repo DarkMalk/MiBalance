@@ -1,29 +1,22 @@
 import type { Request, Response, NextFunction } from 'express'
-
-import { type ZodObject, ZodError } from 'zod'
+import { type ZodObject } from 'zod'
+import { AppError } from '../utils/AppError.js'
 import { HttpCodes } from '../types.js'
 
 const validateRequest =
   (schema: ZodObject) =>
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, _: Response, next: NextFunction) => {
     try {
-      const result = await schema.safeParseAsync(req.body)
-
-      if (!result.success) {
-        return res
-          .status(HttpCodes.BAD_REQUEST)
-          .json({ error: result.error.issues[0]?.message })
+      if (typeof req.body === 'undefined') {
+        throw new AppError('Request body is required', HttpCodes.BAD_REQUEST)
       }
 
-      req.body = { ...req.body, ...result.data }
+      const result = await schema.parseAsync(req.body)
+
+      req.body = { ...req.body, ...result }
       next()
-    } catch (e) {
-      // TODO: manage error zod
-      if (e instanceof ZodError) {
-        return res
-          .status(HttpCodes.BAD_REQUEST)
-          .json({ error: e.issues[0]?.message })
-      }
+    } catch (err) {
+      next(err)
     }
   }
 
