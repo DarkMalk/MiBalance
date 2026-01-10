@@ -6,7 +6,6 @@ import bcrypt from 'bcrypt'
 
 import { HttpCodes } from '../../types.js'
 
-// TODO: manage errors
 const registerController = async (
   req: Request<object, object, CreateAndLoginUserDTO>,
   res: Response,
