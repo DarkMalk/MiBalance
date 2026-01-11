@@ -53,7 +53,7 @@ pnpm run start
 ### Registrar usuarios
 
 - Método: **POST**
-- Ruta: `/api/users/register`
+- Ruta: `/api/user/register`
 - Parámetros del `body` necesarios:
 
 ```json
@@ -66,7 +66,7 @@ pnpm run start
 ### Iniciar sesión
 
 - Método: **POST**
-- Ruta: `/api/users/login`
+- Ruta: `/api/user/login`
 - Parámetros del `body` necesarios:
 
 ```json
@@ -79,7 +79,7 @@ pnpm run start
 ### Ver datos del perfil
 
 - Método: **GET**
-- Ruta: `/api/users/profile`
+- Ruta: `/api/user/profile`
 
 ### Crear categoría
 
