@@ -2,13 +2,27 @@ import type { NextFunction, Request, Response } from 'express'
 import { HttpCodes } from '../types.js'
 import { ZodError } from 'zod'
 
+import { UniqueConstraintError } from 'sequelize'
+
 const checkErrors = (
   err: any,
-  _: Request,
+  req: Request,
   res: Response,
   _next: NextFunction
 ) => {
   const status = err.statusCode || HttpCodes.INTERNAL_SERVER_ERROR
+
+  if (err instanceof UniqueConstraintError) {
+    if (req.path.includes('/api/user/register')) {
+      return res
+        .status(HttpCodes.BAD_REQUEST)
+        .json({ message: 'Unable to complete registration' })
+    }
+
+    return res
+      .status(HttpCodes.CONFLICT)
+      .json({ message: 'Resource already exists' })
+  }
 
   if (err instanceof ZodError) {
     const errors: Record<string, string> = {}
