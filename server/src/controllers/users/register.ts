@@ -13,8 +13,6 @@ const registerController = async (
 ) => {
   const { email, password } = req.body
 
-  console.log({ email, password })
-
   try {
     const passwordHashed = await bcrypt.hash(password, 10)
 
