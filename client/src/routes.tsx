@@ -1,10 +1,15 @@
 import { createBrowserRouter } from 'react-router'
-import App from './App'
+import { Dashboard } from './pages/Dashboard'
+import { Login } from './pages/auth/login'
 
 const routes = createBrowserRouter([
   {
     path: '/',
-    Component: App
+    Component: Dashboard
+  },
+  {
+    path: '/auth/login',
+    Component: Login
   }
 ])
 
