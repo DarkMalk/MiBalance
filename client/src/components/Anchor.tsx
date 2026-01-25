@@ -8,8 +8,6 @@ type Props = {
 const Anchor = ({ path, children }: Props) => {
   const currentPath = window.location.pathname
 
-  console.log(currentPath)
-
   return (
     <Link
       to={path}
