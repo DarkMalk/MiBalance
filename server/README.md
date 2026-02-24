@@ -33,11 +33,13 @@ pnpm run build
 export DB_CONNECTION_STRING="your_connection_string_database"
 export PORT="your_port_available"
 export SECRET_JWT="your_secret_key"
+export ALLOWED_ORIGINS="http://localhost:5173, http://127.0.0.1:5173"
 
 # Windows
 set DB_CONNECTION_STRING="your_connection_string_database"
 set PORT="your_port_available"
 set SECRET_JWT="your_secret_key"
+set ALLOWED_ORIGINS="http://localhost:5173, http://127.0.0.1:5173"
 ```
 
 **NOTA:** En modo desarrollo puedes configurar las variables de entorno con el archivo `.env`
