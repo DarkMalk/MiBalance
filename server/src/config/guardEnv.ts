@@ -34,10 +34,19 @@ const guardDbConnectionString = ({
   return dbConnection
 }
 
+const guardAllowedOrigins = ({ allowedOrigins }: { allowedOrigins: string | undefined }) => {
+  if (!allowedOrigins) {
+    throw new Error('environment variable "ALLOWED_ORIGINS" is not defined')
+  }
+
+  return allowedOrigins
+}
+
 const PORT = guardPort({ port: process.env.PORT })
 const secretJwt = guardSecretJWT({ secretJwt: process.env.SECRET_JWT })
 const dbConnection = guardDbConnectionString({
   dbConnection: process.env.DB_CONNECTION_STRING
 })
+const allowedOrigins = guardAllowedOrigins({ allowedOrigins: process.env.ALLOWED_ORIGINS })
 
-export { PORT, secretJwt, dbConnection }
+export { PORT, secretJwt, dbConnection, allowedOrigins }
