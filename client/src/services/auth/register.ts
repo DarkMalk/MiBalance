@@ -3,8 +3,8 @@ type Props = {
   password: string
 }
 
-const loginService = async ({ email, password }: Props): Promise<{ data: LoginResponse; status: number }> => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/login`, {
+const registerService = async ({ email, password }: Props): Promise<{ data: RegisterResponse; status: number }> => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -15,4 +15,4 @@ const loginService = async ({ email, password }: Props): Promise<{ data: LoginRe
   return { data, status: response.status }
 }
 
-export { loginService }
+export { registerService }

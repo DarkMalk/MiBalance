@@ -20,3 +20,12 @@ interface Transaction {
     name: string
   }
 }
+
+type ErrorMessage = {
+  message: string
+}
+
+type ValidationErrorMessage = ErrorMessage & { errors: Record<string, string> }
+
+type LoginResponse = User | ErrorMessage | ValidationErrorMessage
+type RegisterResponse = { message: string } | ValidationErrorMessage

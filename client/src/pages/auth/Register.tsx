@@ -1,38 +1,36 @@
-import { loginService } from '../../services/auth/login'
-import { Link, useNavigate } from 'react-router'
+import { registerService } from '../../services/auth/register'
+import { Link } from 'react-router'
 import { useState } from 'react'
 
 import { ToastContainer, toast, Bounce } from 'react-toastify'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Logo } from '../../components/Logo'
-import { userStore } from '../../store/userStore'
 
 const INITIAL_DATA = {
   email: '',
   password: ''
 }
 
-const Login = () => {
+const Register = () => {
   const [data, setData] = useState(INITIAL_DATA)
-  const { setUser } = userStore()
-  const navigate = useNavigate()
 
   const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
 
-    const { data: responseAPI } = await loginService({ email: data.email, password: data.password })
+    const { data: responseAPI, status } = await registerService({ email: data.email, password: data.password })
 
-    if ('errors' in responseAPI) {
+    if ('message' in responseAPI && status === 201) {
+      const { message } = responseAPI
+      toast.success(message)
+      setData(INITIAL_DATA)
+    } else if ('errors' in responseAPI) {
       const { errors, message } = responseAPI
       toast.error(message)
       Object.entries(errors).forEach(([key, value]) => toast.error(`${key}: ${value}`))
-    } else if ('message' in responseAPI) {
+    } else {
       const { message } = responseAPI
       toast.error(message)
-    } else {
-      setUser(responseAPI)
-      navigate('/')
     }
   }
 
@@ -43,7 +41,7 @@ const Login = () => {
           <div className='flex flex-col gap-2 justify-center items-center'>
             <Logo />
             <h1 className='text-2xl font-bold'>MiBalance</h1>
-            <p>Ingresa a tu cuenta para continuar</p>
+            <p>Completa tus datos para comenzar</p>
           </div>
           <form onSubmit={onSubmit} className='flex flex-col gap-4 w-full'>
             <Input
@@ -59,7 +57,7 @@ const Login = () => {
             <Input
               label='Contraseña'
               type='password'
-              placeholder='your@email.com'
+              placeholder='********'
               name='password'
               minLength={8}
               maxLength={255}
@@ -67,13 +65,13 @@ const Login = () => {
               value={data.password}
             />
             <Button type='submit'>
-              <span>Iniciar sesión</span>
+              <span>Crear cuenta</span>
             </Button>
           </form>
           <p>
-            <span>¿No tienes cuenta? </span>
-            <Link to='/auth/register' className='text-teal-600 hover:text-teal-500'>
-              Regístrate
+            <span>¿Ya tienes cuenta? </span>
+            <Link to='/auth/login' className='text-teal-600 hover:text-teal-500'>
+              Inicia sesión
             </Link>
           </p>
         </section>
@@ -95,4 +93,4 @@ const Login = () => {
   )
 }
 
-export { Login }
+export { Register }
